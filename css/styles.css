@@ -3,9 +3,18 @@ body {
   text-align: center;
   color: rgba(255, 250, 250, 0.8);
   font-family: "Roboto", monospace;
+}
+
+#homepage{
+  background: url("../img/cafe.gif") no-repeat center center fixed;
+  background-size: cover;
+}
+
+#tictactoe{
   background: url("../img/lofiback.gif") no-repeat center center fixed;
   background-size: cover;
 }
+
 
 h1 {
   margin: 0 auto;
@@ -14,6 +23,46 @@ h1 {
   margin: 2%;
   background-blend-mode: color-dodge;
   color: white;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: lighter;
+  margin: 2%;
+  color: white;
+}
+
+.header
+
+#introgame {
+  background-color: black;
+  border: 5px solid black;
+  color: white;
+  font-size: 25px;
+  line-height: 55px;
+  margin: 1%;
+  text-align: center;
+  width: 456px;
+}
+
+.introcontainer{
+  background-color: rgba(0, 0, 0, 0.45);
+  margin-top: 1%;
+  padding-bottom: 2%;
+  border: 5px solid black;
+  color: white;
+  line-height: 55px;
+  text-align: center;
+  width: auto;
+}
+
+#introtext{
+    margin: 0 auto;
+    font-family: "Major Mono Display", monospace;
+    font-size: 30px;
+    margin: 2%;
+    background-blend-mode: color-dodge;
+    color: white;
 }
 
 #title {
@@ -25,12 +74,6 @@ h1 {
   width: auto;
 }
 
-h2 {
-  font-size: 36px;
-  font-weight: lighter;
-  margin: 2%;
-  color: white;
-}
 
 #subtitle {
   background-color: black;
