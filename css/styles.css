@@ -5,17 +5,6 @@ body {
   font-family: "Roboto", monospace;
 }
 
-#homepage{
-  background: url("../img/cafe.gif") no-repeat center center fixed;
-  background-size: cover;
-}
-
-#tictactoe{
-  background: url("../img/lofiback.gif") no-repeat center center fixed;
-  background-size: cover;
-}
-
-
 h1 {
   margin: 0 auto;
   font-family: "Major Mono Display", monospace;
@@ -32,29 +21,33 @@ h2 {
   color: white;
 }
 
-/*unvisted link */
-a:link {
-  color: #000000;
+/* Page Backgrounds */
+#homepage{
+  background: url("../img/homepage.gif") no-repeat center center fixed;
+  background-size: cover;
 }
 
-/* visited link */
-a:visited {
-  color: #000000;
+#tictactoe{
+  background: url("../img/tictactoe.gif") no-repeat center center fixed;
+  background-size: cover;
 }
 
-/* mouse over link */
-a:hover {
-  color: grey;
+#checkers{
+  background: url("../img/checkers.gif") no-repeat center center fixed;
+  background-size: cover;
 }
 
-/* selected link */
-a:active {
-  color: white;
+#brickbreaker{
+  background: url("../img/brickbreaker.gif") no-repeat center center fixed;
+  background-size: cover;
 }
+
+/* On Each Page */
+
 
 .nav ul {
   list-style: none;
-  background: #000000;
+  background: black;
   text-align: center;
   padding: 0: margin:0;
 }
@@ -66,26 +59,29 @@ a:active {
 .nav a {
   text-decoration: none;
   color: #fff;
-  width: 100px;
   display: block;
-  font-size: 17px;
-}
-
-.nav a:hover {
-  background: #999;
-  transition: 0.4s;
-}
-
-#introgame {
-  background-color: black;
-  border: 5px solid black;
-  color: white;
   font-size: 25px;
   line-height: 55px;
   margin: 1%;
   text-align: center;
-  width: 456px;
+  width: 450px;
 }
+
+.nav a:hover {
+  background: #333333;
+  transition: 0.4s;
+}
+
+#title {
+  background-color: black;
+  border: 5px solid black;
+  color: white;
+  line-height: 55px;
+  text-align: center;
+  width: auto;
+}
+
+/* Homepage Css */
 
 .introcontainer{
   background-color: rgba(0, 0, 0, 0.45);
@@ -107,15 +103,7 @@ a:active {
     color: white;
 }
 
-#title {
-  background-color: black;
-  border: 5px solid black;
-  color: white;
-  line-height: 55px;
-  text-align: center;
-  width: auto;
-}
-
+/* TIC-TAC-TOE Game Page */
 
 #subtitle {
   background-color: black;
