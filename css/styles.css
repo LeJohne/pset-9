@@ -44,7 +44,6 @@ h2 {
 
 /* On Each Page */
 
-
 .nav ul {
   list-style: none;
   background: black;
@@ -174,4 +173,13 @@ h2 {
   background-color: white;
   color: black;
   cursor: pointer;
+}
+
+/* BRICK BREAKER GAME */
+#canvas {
+    padding-bottom: 1%;
+    display: block;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(200, 0, 0);
 }

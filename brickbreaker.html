@@ -10,16 +10,16 @@
   <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet" />
   <link rel="stylesheet" href="css\font-awesome.css">
   <link href="css/styles.css" rel="stylesheet" type="text/css" />
-  <script defer src="js/tictactoe.js"></script>
+  <script defer src="js/brickbreaker.js"></script>
 
-  <title>APCSP Checkers</title>
+  <title>APCSP Brick Breaker</title>
 
   <!-- <iframe width="0" height="0" src="https://www.youtuberepeater.com/watch?v=iEGFFyv0MH4#gsc.tab=0" frameborder="0" allowfullscreen></iframe> -->
 </head>
 
-<body id="checkers">
+<body id="brickbreaker">
 
-  <h1 id="title">checkers</h1>
+  <h1 id="title">gAme Arcade</h1>
   <header>
     <div class="nav">
       <nav>
@@ -31,8 +31,9 @@
         </ul>
       </nav>
     </div>
+    <canvas id="canvas" width="500px" height="400px"></canvas>
+    <button id="reset-button" onClick="startGame()">Play Again!</button>
   </header>
-
 </body>
 
 </html>
