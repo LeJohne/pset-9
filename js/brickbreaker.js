@@ -206,8 +206,14 @@ if (arkanoid.status === 'play') {
 }
 }
 
+document.addEventListener("keyup", function(even){
+  if(event.keyCode == 13){
+    beginGame();
 
-window.onload = () => {
+  }
+});
+
+function beginGame(){
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
@@ -223,6 +229,13 @@ const arkanoid = {
     ctx.fillText('Game Over', fieldWidth / 2, fieldHeight / 2)
   },
 }
+
+setUp();
+
+function setUp() {
+  ctx.fillText('Press Enter To Start!', fieldWidth / 2, fieldHeight / 2)
+}
+
 
 addEventListener(
   'keydown',
