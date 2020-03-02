@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" []|content="ie=edge" />
+
+  <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet" />
+  <link rel="stylesheet" href="css\font-awesome.css">
+  <link href="css/styles.css" rel="stylesheet" type="text/css" />
+  <script defer src="js/checkers.js"></script>
+
+  <title>APCSP Checkers</title>
+
+  <!-- <iframe width="0" height="0" src="https://www.youtuberepeater.com/watch?v=iEGFFyv0MH4#gsc.tab=0" frameborder="0" allowfullscreen></iframe> -->
+</head>
+
+<body id="checkers" id="ht">
+
+  <h1 id="title">checkers</h1>
+  <header>
+    <div class="nav">
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tictactoe.html">TIC - TAC - TOE</a></li>
+          <li><a href="checkers.html">Checkers</a></li>
+          <li><a href="brickbreaker.html">Brick Breaker</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="checker white_checker" style="display:none"> </div>
+  <div class="checker black_checker" style="display:none"> </div>
+
+
+  <div class="square" style="display: none" id ="ht"> </div>
+  <div class="black_background" id="black_background"> </div>
+
+  	<div class="score" id="score">
+  		<br>
+  	</div>
+  <div class="table" id="table">
+
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+  	<div class="checker white_checker"> </div>
+
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+  	<div class="checker black_checker"> </div>
+
+
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="clear_float"> </div>
+
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="clear_float"> </div>
+
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="clear_float"> </div>
+
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="clear_float"> </div>
+
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="clear_float"> </div>
+
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="clear_float"> </div>
+
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="clear_float"> </div>
+
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="square white_square"> </div>
+  	<div class="square black_square"> </div>
+  	<div class="clear_float"> </div>
+
+  </div>
+<!--
+  <audio id="moveSound">
+  	<source src = "sounds/move.mp3">
+  </audio>
+  <audio id="winSound">
+  	<<source src="sounds/win.mp3">
+  </audio> -->
+
+</body>
+
+</html>
