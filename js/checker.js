@@ -221,10 +221,10 @@ function showMoves (piece) {
 
 
 function erase_roads(piece){
-	if(downRight) block[downRight].id.style.background = "#BA7A3A";
-	if(downLeft) block[downLeft].id.style.background = "#BA7A3A";
-	if(upRight) block[upRight].id.style.background = "#BA7A3A";
-	if(upLeft) block[upLeft].id.style.background = "#BA7A3A";
+	if(downRight) block[downRight].id.style.background = "rgba(255, 255, 255, 0.5)";
+	if(downLeft) block[downLeft].id.style.background = "rgba(255, 255, 255, 0.5)";
+	if(upRight) block[upRight].id.style.background = "rgba(255, 255, 255, 0.5)";
+	if(upLeft) block[upLeft].id.style.background = "rgba(255, 255, 255, 0.5)";
 }
 
 function makeMove (index) {
@@ -346,7 +346,7 @@ function executeMove (X,Y,nSquare){
 function checkMove(Apiece,tLimit,tLimit_Side,moveDirection,theDirection){
 	if(Apiece.coordY != tLimit){
 		if(Apiece.coordX != tLimit_Side && !block[ Apiece.ocupied_square + moveDirection ].ocupied){
-			block[ Apiece.ocupied_square + moveDirection ].id.style.background = "#704923";
+			block[ Apiece.ocupied_square + moveDirection ].id.style.background = "rgba(53, 56, 57, 0.5)";
 			theDirection = Apiece.ocupied_square + moveDirection;
 		}
 	else
@@ -363,7 +363,7 @@ function  checkAttack( check , X, Y , negX , negY, squareMove, direction){
 	if(check.coordX * negX >= 	X * negX && check.coordY *negY <= Y * negY && block[check.ocupied_square + squareMove ].ocupied && block[check.ocupied_square + squareMove].pieceId.color != check.color && !block[check.ocupied_square + squareMove * 2 ].ocupied){
 		mustAttack = true;
 		direction = check.ocupied_square +  squareMove*2 ;
-		block[direction].id.style.background = "#704923";
+		block[direction].id.style.background = "rgba(191, 0, 0, 0.6)";
 		return direction ;
 	}
 	else
@@ -468,10 +468,6 @@ else
 	score.innerHTML = "Red wins";
 }
 
-function playSound(sound){
-	if(sound) sound.play();
-}
-
 
 function getDimension (){
 	contor ++;
@@ -482,9 +478,6 @@ function getDimension (){
 	|| document.documentElement.clientWidth
 	|| document.body.clientWidth;
 }
-
-
-
 
 document.getElementsByTagName("BODY")[0].onresize = function(){
 
@@ -508,4 +501,9 @@ if(windowWidth > 650){
 		w_checker[i].setCoord(0,0);
 	}
 	}
+}
+
+function beginGame() {
+  location.reload();
+  return false;
 }
