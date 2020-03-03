@@ -468,6 +468,10 @@ else
 	score.innerHTML = "Red wins";
 }
 
+function playSound(sound){
+	if(sound) sound.play();
+}
+
 
 function getDimension (){
 	contor ++;
