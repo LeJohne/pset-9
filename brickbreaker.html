@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" []|content="ie=edge" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" []|content="ie=edge" />
+      <title>APCSP Brick Breaker</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet" />
-  <link rel="stylesheet" href="css\font-awesome.css">
-  <link href="css/styles.css" rel="stylesheet" type="text/css" />
-  <script defer src="js/brickbreaker.js"></script>
+      <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet" />
+      <link href="css/styles.css" rel="stylesheet" type="text/css" />
 
-  <title>APCSP Brick Breaker</title>
+      <script defer src="js/brickbreaker.js"></script>
+	</head>
 
-  <!-- <iframe width="0" height="0" src="https://www.youtuberepeater.com/watch?v=iEGFFyv0MH4#gsc.tab=0" frameborder="0" allowfullscreen></iframe> -->
-</head>
+	<body id = "brickbreaker">
+    <header>
+      <div class="nav">
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tictactoe.html">TIC - TAC - TOE</a></li>
+            <li><a href="checkers.html">Checkers</a></li>
+            <li><a href="brickbreaker.html">Brick Breaker</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-<body id="brickbreaker">
+      <br>
+      <br>
+      <br>
+      <br>
 
-  <h1 id="title">gAme Arcade</h1>
-  <header>
-    <div class="nav">
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="tictactoe.html">TIC - TAC - TOE</a></li>
-          <li><a href="checkers.html">Checkers</a></li>
-          <li><a href="brickbreaker.html">Brick Breaker</a></li>
-        </ul>
-      </nav>
-    </div>
-    <br>
-      <canvas id="canvas" width="500px" height="400px"></canvas>
-    <button id="reset-button" onClick="beginGame()">Play Again!</button>
-  </header>
-</body>
-
+        <div class="controls">Control using Mouse or the Arrow Keys</div>
+        <canvas width="800px" height="500px" id="canvas"></canvas>
+        <button id="reset-button" >Play!</button>
+	</body>
 </html>

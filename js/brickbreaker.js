@@ -1,231 +1,274 @@
-const fieldHeight = 400
-const fieldWidth = 500
-const numberOfRows = 3
-const tilesInRow = 8
-const sizeOfGap = 3
-
-const requestAnimationFrame = window.requestAnimationFrame
-
-class Tile {
-  constructor(x, y) {
-    this.x = x
-    this.y = y
-    this.isAlive = true
-  }
-
-  draw(ctx) {
-    if (!this.isAlive) return
-    ctx.fillStyle = Tile.color
-    ctx.fillRect(
-      this.x,
-      this.y,
-      Tile.width,
-      Tile.height,
-    )
-    ctx.strokeStyle = "rgba(0,0,0,1)"
-    ctx.strokeRect(
-      this.x,
-      this.y,
-      Tile.width,
-      Tile.height,
-    )
-  }
-}
-
-Tile.color = 'rgba(234,66,61, 0.7)'
-Tile.width = fieldWidth / tilesInRow - 2 * sizeOfGap
-Tile.height = 25
+// Canvas
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+ctx.fillStyle = "orange";
+ctx.strokeStyle = "black";
+ctx.lineWidth = 2.5;
+ctx.lineCap = "round";
+ctx.lineJoin = "round";
+ctx.textAlign = "center";
+ctx.font = '40px "Roboto", monospace';
 
 
-const generateTiles = () => {
-  const tiles = []
-  for (let i = 0; i < numberOfRows; i++) {
-    tiles[i] = []
-    for (let j = 0; j < tilesInRow; j++) {
-      const x = (2 * j + 1) * sizeOfGap + j * Tile.width
-      const y = (2 * i + 1) * sizeOfGap + i * Tile.height
-      tiles[i][j] = new Tile(x, y)
-    }
-  }
-  return tiles
-}
+// Variables
+let dx;
+let dxFactor;
+let speed;
+let gameStarted = false;
 
+// Objects
+let bricks = [];
 
-const drawTiles = (tiles, ctx) => {
-  for (let i = 0; i < numberOfRows; i++) {
-    for (let j = 0; j < tilesInRow; j++) {
-      tiles[i][j].draw(ctx)
-    }
-  }
-}
-
-
-class Platform {
-  constructor() {
-    this.x = (fieldWidth - Platform.width) / 2
-    this.y = fieldHeight - Platform.height
-  }
-
-  draw(ctx) {
-    ctx.fillStyle = Platform.color
-    ctx.fillRect(
-      this.x,
-      this.y,
-      Platform.width,
-      Platform.height,
-    )
-  }
-
-  movePlatformByEvent(e) {
-    const modifier = 1
-    switch (e.keyCode) {
-      case 37: {
-        if (this.x > 0) {
-          this.x -= Platform.speed * modifier
-        }
-        break
-      }
-      case 39: {
-        if (this.x < fieldWidth - Platform.width) {
-          this.x += Platform.speed * modifier
-        }
-        break
-      }
-    }
-  }
-}
-
-Platform.width = 100
-Platform.height = 10
-Platform.color = 'rgba(238,186,48)'
-Platform.speed = 20
-
-
-class Boll {
-  constructor() {
-    this.x = fieldWidth / 2
-    this.y = fieldHeight - Boll.radius - Platform.height
-    this.angle = -(Math.random() * (Math.PI / 2) + Math.PI / 4)
-  }
-
-  draw(ctx) {
-    ctx.beginPath()
-    ctx.arc(
-      this.x,
-      this.y,
-      Boll.radius,
-      0,
-      2 * Math.PI,
-      false
-    )
-    ctx.fillStyle = Boll.color
-    ctx.fill()
-  }
-}
-
-Boll.color = 'rgba(238,186,48)'
-Boll.radius = 8
-Boll.speed = 4
-
-
-const core = (arkanoid) => {
-  const {
-    boll,
-    platform,
-    tiles,
-  } = arkanoid
-
-  if (boll.y <= Boll.radius) {
-    Boll.speed = -Boll.speed
-    return
-  }
-
-  if (boll.y >= fieldHeight - Platform.height - Boll.radius) {
-    if (
-      (boll.x + (Boll.radius * 2) >= platform.x) &&
-      (boll.x - (Boll.radius * 2) <= platform.x + Platform.width)
-    ) {
-      //boll.angle *= -1
-      const shift = (platform.x + (Platform.width / 2) - boll.x) / (Platform.width / 2)
-      const shiftCoef = (shift / 2) + 0.5
-      boll.angle = -(shiftCoef * (Math.PI / 2) + Math.PI / 4)
-      return
-    } else if (boll.y >= fieldHeight - Boll.radius) {
-      arkanoid.status = 'finish'
-      arkanoid.finish()
-      return
-    }
-  }
-
-  if (
-    (boll.x <= Boll.radius) ||
-    (boll.x >= fieldWidth - Boll.radius)
-  ) {
-    boll.angle = Math.PI - boll.angle
-    return
-  }
-
-  for (let tilesRow of tiles) {
-    for (let tile of tilesRow) {
-      if (!tile.isAlive) continue
-      if (
-        boll.x - Boll.radius <= tile.x + Tile.width &&
-        boll.x + Boll.radius >= tile.x &&
-        boll.y - Boll.radius <= tile.y + Tile.height &&
-        boll.y + Boll.radius >= tile.y
-      ) {
-        tile.isAlive = false
-        boll.angle *= -1
-        return
-      }
-    }
-  }
-}
-
-
-const render = (ctx, arkanoid) => {
-  const {
-    tiles,
-    platform,
-    boll,
-  } = arkanoid
-
-  boll.y += (Boll.speed * Math.sin(boll.angle))
-  boll.x += (Boll.speed * Math.cos(boll.angle))
-
-  ctx.clearRect(0, 0, fieldWidth, fieldHeight)
-  drawTiles(tiles, ctx)
-  platform.draw(ctx)
-  boll.draw(ctx)
-
-  core(arkanoid)
-
-  if (arkanoid.status === 'play') {
-    requestAnimationFrame(() => render(ctx, arkanoid))
-  }
+let ball = {
+    x: undefined,
+    y: undefined,
+    radius: 10,
+    right: true,
+    up: true
 };
 
-beginGame();
+let paddle = {
+    x: (canvas.width / 2) - 40,
+    y: canvas.height - 10,
+    width: 80,
+    height: 5,
+    movement: 1
+};
 
-function beginGame() {
-  const canvas = document.getElementById('canvas')
-  const ctx = canvas.getContext('2d')
-  const arkanoid = {
-    tiles: generateTiles(),
-    platform: new Platform(),
-    boll: new Boll(),
-    status: 'play',
-    finish: () => {
-      ctx.font = '50px "Roboto", monospace'
-      ctx.fillStyle = 'white'
-      ctx.textAlign = 'center'
-      ctx.fillText('Game Over', fieldWidth / 2, fieldHeight / 2)
-    },
-  }
+let brickImage = new Image();
+brickImage.src = "img/brick.png";
 
-  addEventListener(
-    'keydown',
-    arkanoid.platform.movePlatformByEvent.bind(arkanoid.platform)
-  )
-  render(ctx, arkanoid)
+let bollImage = new Image();
+bollImage.src = "img/boll.png";
+
+
+// Event Listeners
+window.onload = function() {
+    document.getElementById("reset-button").onclick = init;
+    game();
+}
+document.addEventListener("keydown", getArrowKeys);
+document.getElementById("canvas").addEventListener("mousemove", getMouse);
+
+
+// Functions
+function init() {
+    document.getElementById("reset-button").innerHTML = "Reset";
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height - 30;
+    ball.right = true;
+    ball.up = true;
+    paddle.x = (canvas.width / 2) - 40;
+    paddle.y = canvas.height - 10;
+    dxFactor = 1;
+    speed = 0;
+    bricks = [];
+    createbricks();
+    gameStarted = true;
+}
+
+function game() {
+    if (gameStarted) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        draw();
+        checkCollision();
+        changeDirection();
+        if (bricks.length === 0) {
+            win();
+        }
+    }
+
+    setTimeout(game, 20 - speed);
+}
+
+function checkCollision() {
+    if (ball.x - ball.radius <= 0) {
+        ball.right = true;
+    }
+    if (ball.x + ball.radius >= canvas.width) {
+        ball.right = false;
+    }
+    if (ball.y - ball.radius <= 0) {
+        ball.up = false;
+    }
+    if (ball.y - ball.radius >= canvas.height) {
+        gameOver();
+    }
+
+    for (let j = 0; j < bricks.length; j++) {
+        if (ball.up && ball.y - ball.radius <= bricks[j].y + bricks[j].height && ball.y - ball.radius > bricks[j].y + bricks[j].height - 12 && ball.x >= bricks[j].x - ball.radius && ball.x < bricks[j].x + bricks[j].width + ball.radius) {
+            ball.up = false;
+            ctx.clearRect(bricks[j].x, bricks[j].y, bricks[j].width, bricks[j].height);
+            bricks.splice(j, 1);
+            break;
+        }
+        else if (!ball.up && ball.y + ball.radius >= bricks[j].y && ball.y + ball.radius < bricks[j].y + 12 && ball.x >= bricks[j].x - ball.radius && ball.x < bricks[j].x + bricks[j].width + ball.radius) {
+            ball.up = true;
+            ctx.clearRect(bricks[j].x, bricks[j].y, bricks[j].width, bricks[j].height);
+            bricks.splice(j, 1);
+            break;
+        }
+        else if (ball.right && ball.x + ball.radius >= bricks[j].x && ball.x + ball.radius < bricks[j].x + 12 && ball.y >= bricks[j].y - ball.radius && ball.y < bricks[j].y + bricks[j].height + ball.radius) {
+            ball.right = false;
+            ctx.clearRect(bricks[j].x, bricks[j].y, bricks[j].width, bricks[j].height);
+            bricks.splice(j, 1);
+            break;
+        }
+        else if (!ball.right && ball.x - ball.radius <= bricks[j].x + bricks[j].width && ball.x - ball.radius > bricks[j].x + bricks[j].width - 12 && ball.y >= bricks[j].y - ball.radius && ball.y < bricks[j].y + bricks[j].height + ball.radius) {
+            ball.right = true;
+            ctx.clearRect(bricks[j].x, bricks[j].y, bricks[j].width, bricks[j].height);
+            bricks.splice(j, 1);
+            break;
+        }
+    }
+
+    if (ball.y + ball.radius >= paddle.y && ball.y <= paddle.y + paddle.height) {
+        let a = 3;
+        const DX_FACTOR_CHANGE = a / 25;
+        for (let i = 2; i <= 100; i += 2) {
+            if (ball.x >= paddle.x - ball.radius + i - 2 && ball.x < paddle.x - ball.radius + i) {
+                if (i < 50) {
+                    ball.up = true;
+                    ball.right = false;
+                    ball.y = canvas.height - 20;
+                    speed = (speed >= 14) ? speed = 14 : speed + 0.5;
+                    dxFactor = Math.abs(a);
+                }
+                else if (i >= 50) {
+                    ball.up = true;
+                    ball.right = true;
+                    ball.y = canvas.height - 20;
+                    speed = (speed >= 14) ? speed = 14 : speed + 0.5;
+                    dxFactor = Math.abs(a);
+                }
+                break;
+            }
+            else {
+                a -= DX_FACTOR_CHANGE;
+            }
+        }
+    }
+
+    if (paddle.x + paddle.width > canvas.width) {
+        paddle.movement = 0;
+        paddle.x = canvas.width - paddle.width;
+    }
+    else if (paddle.x < 0) {
+        paddle.movement = 0;
+        paddle.x = 0;
+    }
+    else {
+        paddle.movement = 1;
+    }
+}
+
+function changeDirection() {
+    if (ball.right) {
+        dx = 3 * dxFactor;
+    }
+    else {
+        dx = -3 * dxFactor;
+    }
+    if (ball.up) {
+        dy = -3;
+    }
+    else {
+        dy = 3;
+    }
+    ball.x += dx;
+    ball.y += dy;
+}
+
+function draw() {
+    ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+
+    ctx.drawImage(bollImage, ball.x - ball.radius, ball.y - ball.radius);
+
+    for (let i = 0; i < bricks.length; i++) {
+        ctx.drawImage(brickImage, bricks[i].x, bricks[i].y);
+    }
+
+    ctx.font = '24px "Roboto", monospace';
+    ctx.fillStyle = "lightgray";
+    ctx.textAlign = "left";
+    ctx.fillText("Bricks Left: " + bricks.length, 10, canvas.height - 20);
+
+    ctx.textAlign = "right";
+    ctx.fillText("Speed: " + (Math.floor(speed) + 1), canvas.width - 10, canvas.height - 20);
+    ctx.font = '50px "Roboto", monospace';
+
+    ctx.fillStyle = "rgb(200, 0, 0, 0.7)";
+    ctx.textAlign = "center";
+}
+
+function getArrowKeys(event) {
+    if (gameStarted) {
+        if (event.keyCode == 37) {
+            let timer = setInterval(() => paddle.x -= paddle.movement, 4);
+            setTimeout(() => { clearInterval(timer); }, 100);
+        }
+        else if (event.keyCode == 39) {
+            let timer2 = setInterval(() => paddle.x += paddle.movement, 4);
+            setTimeout(() => { clearInterval(timer2); }, 100);
+        }
+    }
+}
+
+function getMouse(event2) {
+    paddle.x = event2.offsetX - (paddle.width / 2);
+}
+
+function createbricks() {
+    for (let y = 0; y <= 80; y += 40) {
+        for (let x = 0; x < canvas.width; x += canvas.width / 10) {
+            // let hasPowerUp = (Math.random() > 0.9) ? true : false;
+            // let powerUp;
+            // if (hasPowerUp) {
+            //     let powerUpSelector = randomInteger(3);
+            //     switch(powerUpSelector) {
+            //         case 0:
+            //             powerUp = "speed down";
+            //             break;
+            //         case 1:
+            //             powerUp = "large paddle";
+            //             break;
+            //         case 2:
+            //             powerUp = "uh";
+            //             break;
+            //     }
+            // }
+            let brickTemplate = {
+                x: x,
+                y: y,
+                width: canvas.width / 10,
+                height: 40
+            };
+            bricks.push(brickTemplate);
+        }
+    }
+}
+
+function gameOver() {
+    gameStarted = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let gameOverStats = (bricks.length === 29) ? (30 - bricks.length) + " brick broken out of 30" : (30 - bricks.length) + " bricks broken out of 30";
+    ctx.strokeText("GAME OVER", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.fillText("GAME OVER", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.strokeText(gameOverStats, canvas.width / 2, (canvas.height / 2) + 40);
+    ctx.fillText(gameOverStats, canvas.width / 2, (canvas.height / 2) + 40);
+    document.getElementById("reset-button").innerHTML = "Play Again!";
+}
+
+function win() {
+    gameStarted = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeText("CONGRATULATIONS!", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.fillText("CONGRATULATIONS!", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.strokeText("You win!", canvas.width / 2, (canvas.height / 2) + 40);
+    ctx.fillText("You win!", canvas.width / 2, (canvas.height / 2) + 40);
+    document.getElementById("reset-button").innerHTML = "Play Again!";
+}
+
+function randomInteger(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
